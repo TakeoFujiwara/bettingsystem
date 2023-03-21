@@ -1,6 +1,6 @@
 import sys
 
-unit = sys.argv[1] if len(sys.argv) > 1 else 0.5
+unit = float(sys.argv[1]) if len(sys.argv) > 1 else 0.5
 numbers = []
 
 def reset_numbers() -> None:
