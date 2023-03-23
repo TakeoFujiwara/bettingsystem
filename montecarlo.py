@@ -1,5 +1,6 @@
 import sys
 
+upper = True if len(sys.argv) > 2 and '-u' in sys.argv else False
 unit = float(sys.argv[1]) if len(sys.argv) > 1 else 0.5
 numbers = []
 
@@ -8,7 +9,10 @@ def reset_numbers() -> None:
     numbers = [1, 2, 3]
 
 def next_bet() -> float:
-    return (numbers[0] + numbers[-1]) * unit
+    if upper == True:
+        return int((numbers[0] + numbers[-1]) * unit + 0.5)
+    else:
+        return (numbers[0] + numbers[-1]) * unit
 
 def win() -> None:
     global numbers
@@ -41,10 +45,12 @@ while True:
     print_numbers()
     bet_amount = next_bet()
     print('next bet amount : ' + str([bet_amount]))
-    print('Win[(any)] or Lose[(enter)] ? : ', end='')
+    print('Win[(any)], Lose[(space)] or Quit[qQ] ? : ', end='')
     num_games += 1
     result = input()
-    if result.strip() != '':
+    if result.strip() in ['q', 'Q']:
+        break
+    elif result.strip() != '':
         #win
         num_win += 1
         profit += bet_amount
@@ -54,6 +60,7 @@ while True:
         num_lose += 1
         profit -= bet_amount
         lose()
-    print('current profit : ' + str(profit))
-
+    print('current profit : {:>4.2f}'.format(profit))
+    print('win-count      : {:>4}'.format(num_win))
+    print('lose-count     : {:>4}'.format(num_lose))
 
